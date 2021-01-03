@@ -12,7 +12,7 @@ import Keyboard from "simple-keyboard";
 })
 export class AppComponent {
   keyboard: Keyboard;
-  selectedInputElem: any;
+  inputName = "firstName";
   inputs = {
     firstName: "Boaty",
     lastName: "McBoatface"
@@ -21,6 +21,7 @@ export class AppComponent {
   ngAfterViewInit() {
     this.keyboard = new Keyboard({
       debug: true,
+      inputName: this.inputName,
       onChange: (input) => this.onChange(input),
       onKeyPress: (button) => this.onKeyPress(button),
       preventMouseDownDefault: true // If you want to keep focus on input
@@ -34,9 +35,9 @@ export class AppComponent {
   }
 
   onInputFocus = (event: any) => {
-    this.selectedInputElem = event.target;
+    this.inputName = event.target.id;
 
-    console.log("Focused input", this.selectedInputElem, event.target.id);
+    console.log("Focused input", this.inputName);
 
     this.keyboard.setOptions({
       inputName: event.target.id
@@ -55,15 +56,19 @@ export class AppComponent {
   };
 
   onChange = (input: string) => {
-    this.selectedInputElem.value = input;
+    this.inputs[this.inputName] = input;
     console.log("Input changed", input);
 
     /**
      * Synchronizing input caret position
      */
     let caretPosition = this.keyboard.caretPosition;
+
     if (caretPosition !== null)
-      this.setInputCaretPosition(this.selectedInputElem, caretPosition);
+      this.setInputCaretPosition(
+        document.querySelector(`#${this.inputName}`),
+        caretPosition
+      );
 
     console.log("caretPosition", caretPosition);
   };
