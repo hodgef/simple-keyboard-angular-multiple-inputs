@@ -61,6 +61,7 @@ export class AppComponent {
 
     /**
      * Synchronizing input caret position
+     * This part is optional and only relevant if using the option "preventMouseDownDefault: true"
      */
     let caretPosition = this.keyboard.caretPosition;
 
