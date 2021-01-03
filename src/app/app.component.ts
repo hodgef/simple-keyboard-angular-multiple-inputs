@@ -11,30 +11,32 @@ import Keyboard from "simple-keyboard";
   ]
 })
 export class AppComponent {
-  value = "";
   keyboard: Keyboard;
   selectedInputElem: any;
+  inputs = {
+    firstName: "Boaty",
+    lastName: "McBoatface"
+  };
 
   ngAfterViewInit() {
     this.keyboard = new Keyboard({
       debug: true,
-      onChange: input => this.onChange(input),
-      onKeyPress: button => this.onKeyPress(button),
-      preventMouseDownDefault: true
+      onChange: (input) => this.onChange(input),
+      onKeyPress: (button) => this.onKeyPress(button),
+      preventMouseDownDefault: true // If you want to keep focus on input
     });
 
-    this.selectedInputElem = document.querySelector(".input:first-child");
-
-    document.querySelectorAll(".input").forEach(input => {
-      input.addEventListener("focus", this.onInputFocus);
-      input.addEventListener("input", this.onInputChange);
-    });
+    /**
+     * Since we have default values for our inputs,
+     * we must sync them with simple-keyboard
+     */
+    this.keyboard.replaceInput(this.inputs);
   }
 
   onInputFocus = (event: any) => {
     this.selectedInputElem = event.target;
 
-    console.log("Focused input", this.selectedInputElem);
+    console.log("Focused input", this.selectedInputElem, event.target.id);
 
     this.keyboard.setOptions({
       inputName: event.target.id
