@@ -1,6 +1,20 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-	<input id="t1" class="input" class="input" placeholder="Input 1" />
-	<input id="t2" class="input" class="input" placeholder="Input 2" />
-	<div class="simple-keyboard"></div>
+<div style="text-align: center;">
+  <input
+    id="firstName"
+    [(ngModel)]="inputs.firstName"
+    class="input"
+    placeholder="First Name"
+    (focus)="onInputFocus($event)"
+    (change)="onInputChange($event)"
+  />
+  <input
+    id="lastName"
+    [(ngModel)]="inputs.lastName"
+    class="input"
+    placeholder="Last Name"
+    (focus)="onInputFocus($event)"
+    (change)="onInputChange($event)"
+  />
+  <div class="simple-keyboard"></div>
 </div>
